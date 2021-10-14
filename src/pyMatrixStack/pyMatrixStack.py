@@ -1,4 +1,4 @@
-# Copyright (c) 2017-2018 William Emerison Six
+# Copyright (c) 2017-2021 William Emerison Six
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -132,6 +132,17 @@ def __popMatrix__(matrixStack):
         pass
 
 
+class PushMatrix:
+    def __init__(self, m):
+        self.m = m
+
+    def __enter__(self):
+        __pushMatrix__(self.m)
+
+    def __exit__(self, type, val, tp):
+        __popMatrix__(self.m)
+
+
 @contextmanager
 def push_matrix(m):
     """Instead of manually pushing and poping the matrix stack,
@@ -159,7 +170,7 @@ def setToIdentityMatrix(m):
     )
 
 
-def rotateX(matrixStack, rads):
+def rotate_x(matrixStack, rads):
     """Using a normal linear algebra notation, which
     is row-major, 1-based indexes, the following
     matrix multiplication shows how to add a rotation
@@ -198,7 +209,7 @@ def rotateX(matrixStack, rads):
     m[3, 2] = copyOfM[3, 1] * -s + copyOfM[3, 2] * c
 
 
-def rotateY(matrixStack, rads):
+def rotate_y(matrixStack, rads):
     """Using a normal linear algebra notation, which
     is row-major, 1-based indexes, the following
     matrix multiplication shows how to add a rotation
@@ -236,7 +247,7 @@ def rotateY(matrixStack, rads):
     m[3, 2] = copyOfM[3, 0] * s + copyOfM[3, 2] * c
 
 
-def rotateZ(matrixStack, rads):
+def rotate_z(matrixStack, rads):
     """Using a normal linear algebra notation, which
     is row-major, 1-based indexes, the following
     matrix multiplication shows how to add a rotation
