@@ -21,4 +21,5 @@
 # SOFTWARE.
 
 
+from .pyMatrixStack import *
 name = "pyMatrixStack"

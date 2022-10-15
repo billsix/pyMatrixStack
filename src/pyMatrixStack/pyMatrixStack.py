@@ -70,7 +70,7 @@ __projectionStack__ = [
 ]
 
 
-def getCurrentMatrix(matrixStack):
+def get_current_matrix(matrixStack):
     if matrixStack == MatrixStack.model:
         return __modelStack__[len(__modelStack__) - 1]
     if matrixStack == MatrixStack.view:
@@ -92,7 +92,7 @@ def getCurrentMatrix(matrixStack):
         )
 
 
-def setCurrentMatrix(matrixStack, m):
+def set_current_matrix(matrixStack, m):
     if matrixStack == MatrixStack.model:
         __modelStack__[len(__modelStack__) - 1] = m
     if matrixStack == MatrixStack.view:
@@ -108,11 +108,11 @@ def setCurrentMatrix(matrixStack, m):
 
 def __pushMatrix__(matrixStack):
     if matrixStack == MatrixStack.model:
-        __modelStack__.append(np.copy(getCurrentMatrix(matrixStack)))
+        __modelStack__.append(np.copy(get_current_matrix(matrixStack)))
     if matrixStack == MatrixStack.view:
-        __viewStack__.append(np.copy(getCurrentMatrix(matrixStack)))
+        __viewStack__.append(np.copy(get_current_matrix(matrixStack)))
     if matrixStack == MatrixStack.projection:
-        __projectionStack__.append(np.copy(getCurrentMatrix(matrixStack)))
+        __projectionStack__.append(np.copy(get_current_matrix(matrixStack)))
     if matrixStack == MatrixStack.modelview:
         pass
     if matrixStack == MatrixStack.modelviewprojection:
@@ -155,8 +155,8 @@ def push_matrix(m):
         __popMatrix__(matrixStack)
 
 
-def setToIdentityMatrix(m):
-    setCurrentMatrix(
+def set_to_identity_matrix(m):
+    set_current_matrix(
         m,
         np.matrix(
             [
@@ -192,7 +192,7 @@ def rotate_x(matrixStack, rads):
     M(4,1)  M(4,2)*cos+M(4,3)*sin  M(4,2)*-sin+M(4,3)*cos  M(4,4)
     """
 
-    m = getCurrentMatrix(matrixStack)
+    m = get_current_matrix(matrixStack)
     copyOfM = np.copy(m)
 
     c = math.cos(rads)
@@ -230,7 +230,7 @@ def rotate_y(matrixStack, rads):
     M(3,1)*cos+M(3,3)*-sin    M(3,2)     M(3,1)*sin+M(3,3)*cos     M(3,4)
     M(4,1)*cos+M(4,3)*-sin    M(4,2)     M(4,1)*sin+M(4,3)*cos     M(4,4)
     """
-    m = getCurrentMatrix(matrixStack)
+    m = get_current_matrix(matrixStack)
     copyOfM = np.copy(m)
 
     c = math.cos(rads)
@@ -268,7 +268,7 @@ def rotate_z(matrixStack, rads):
     M(3,1)*cos+M(3,2)*sin    M(3,1)*-sin+M(3,2)*cos M(3,3) M(3,4)
     M(4,1)*cos+M(4,2)*sin    M(4,1)*-sin+M(4,2)*cos M(4,3) M(4,4)
     """
-    m = getCurrentMatrix(matrixStack)
+    m = get_current_matrix(matrixStack)
     copyOfM = np.copy(m)
 
     c = math.cos(rads)
@@ -306,7 +306,7 @@ def translate(matrixStack, x, y, z):
     M(3,1) M(3,2) M(3,3) (M(3,1)*x + M(3,2)*y + M(3,3)*z + M(3,4)*w)
     M(4,1) M(4,2) M(4,3) (M(4,1)*x + M(4,2)*y + M(4,3)*z + M(4,4)*w)
     """
-    m = getCurrentMatrix(matrixStack)
+    m = get_current_matrix(matrixStack)
 
     m[0, 3] = m[0, 0] * x + m[0, 1] * y + m[0, 2] * z + m[0, 3]
     m[1, 3] = m[1, 0] * x + m[1, 1] * y + m[1, 2] * z + m[1, 3]
@@ -335,7 +335,7 @@ def scale(matrixStack, x, y, z):
     M(3,1)*x  M(3,2)*y  M(3,3)*z  M(3,4)
     M(4,1)*x  M(4,2)*y  M(4,3)*z  M(4,4)
     """
-    m = getCurrentMatrix(matrixStack)
+    m = get_current_matrix(matrixStack)
 
     m[0, 0] = m[0, 0] * x
     m[1, 0] = m[1, 0] * x
@@ -355,7 +355,7 @@ def scale(matrixStack, x, y, z):
 
 def multiply(matrixStack, rhs):
     """Matrix multiply"""
-    m = getCurrentMatrix(matrixStack)
+    m = get_current_matrix(matrixStack)
     m[0:4, 0:4] = np.matmul(m.copy(), rhs)
 
 
