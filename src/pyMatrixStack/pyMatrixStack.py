@@ -1,4 +1,4 @@
-# Copyright (c) 2017-2021 William Emerison Six
+# Copyright (c) 2017-2022 William Emerison Six
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -359,7 +359,7 @@ def multiply(matrixStack, rhs):
     m[0:4, 0:4] = np.matmul(m.copy(), rhs)
 
 
-def ortho(left, right, back, top, near, far):
+def ortho(left, right, bottom, top, near, far):
     """ortho projection, like a blueprint diagram for a house.
     depth down the z axis does not affect x and y position
     in screen space.
@@ -367,11 +367,11 @@ def ortho(left, right, back, top, near, far):
     http://www.songho.ca/opengl/gl_projectionmatrix.html
     """
     dx = right - left
-    dy = top - back
+    dy = top - bottom
     dz = far - near
 
     rx = -(right + left) / (right - left)
-    ry = -(top + back) / (top - back)
+    ry = -(top + bottom) / (top - bottom)
     rz = -(far + near) / (far - near)
 
     __projectionStack__[len(__projectionStack__) - 1] = np.matrix(

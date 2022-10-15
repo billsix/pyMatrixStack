@@ -2,7 +2,7 @@ from setuptools import setup, Extension
 
 
 setup (name = 'pyMatrixStack',
-       version = '0.0.2',
+       version = '0.0.4',
        description = 'Matrix stack for OpenGL',
        author = 'William Emerison Six',
        author_email = 'billsix@gmail.com',

@@ -1,6 +1,6 @@
 # MIT License
 
-# Copyright (c) 2018 Bill Six
+# Copyright (c) 2018-2022 William Emerison Six
 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -21,5 +21,4 @@
 # SOFTWARE.
 
 
-from .pyMatrixStack import *
 name = "pyMatrixStack"
