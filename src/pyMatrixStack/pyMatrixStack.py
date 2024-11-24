@@ -19,10 +19,11 @@
 # SOFTWARE.
 
 
-import numpy as np
-from enum import Enum
 import math
 from contextlib import contextmanager
+from enum import Enum
+
+import numpy as np
 
 
 class MatrixStack(Enum):
