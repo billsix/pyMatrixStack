@@ -385,30 +385,30 @@ def ortho(left, right, bottom, top, near, far):
     )
 
 
-def perspective(fov, aspectRatio, nearZ, farZ):
+def perspective(field_of_view, aspectRatio, near_z, far_z):
     """perspective projection, where things further away look smaller
     by shrinking their x and y coordinates.
 
     Camera is at 0,0,0, facing down the negative z axis.
 
-    nearZ and farZ are expressed in positive numbers, which is odd,
-    because the camera space coordinates will be from -nearZ to -farZ
+    near_z and far_z are expressed in positive numbers, which is odd,
+    because the camera space coordinates will be from -near_z to -far_z
     on the z axis.
 
     http://www.songho.ca/opengl/gl_projectionmatrix.html
     """
-    top = nearZ * math.tan(fov * 3.14159265358979323846 / 360.0)
+    top = near_z * math.tan(field_of_view * 3.14159265358979323846 / 360.0)
     right = top * aspectRatio
 
     __projectionStack__[len(__projectionStack__) - 1] = np.matrix(
         [
-            [nearZ / right, 0.0, 0.0, 0.0],
-            [0.0, nearZ / top, 0.0, 0.0],
+            [near_z / right, 0.0, 0.0, 0.0],
+            [0.0, near_z / top, 0.0, 0.0],
             [
                 0.0,
                 0.0,
-                -(farZ + nearZ) / (farZ - nearZ),
-                -2 * (farZ * nearZ) / (farZ - nearZ),
+                -(far_z + near_z) / (far_z - near_z),
+                -2 * (far_z * near_z) / (far_z - near_z),
             ],
             [0.0, 0.0, -1.0, 0.0],
         ],
