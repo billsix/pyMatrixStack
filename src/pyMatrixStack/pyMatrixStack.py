@@ -73,33 +73,33 @@ __projectionStack__ = [
 
 def get_current_matrix(matrixStack):
     if matrixStack == MatrixStack.model:
-        return __modelStack__[len(__modelStack__) - 1]
+        return __modelStack__[-1]
     if matrixStack == MatrixStack.view:
-        return __viewStack__[len(__viewStack__) - 1]
+        return __viewStack__[-1]
     if matrixStack == MatrixStack.projection:
-        return __projectionStack__[len(__projectionStack__) - 1]
+        return __projectionStack__[-1]
     if matrixStack == MatrixStack.modelview:
         return np.matmul(
-            __viewStack__[len(__viewStack__) - 1],
-            __modelStack__[len(__modelStack__) - 1],
+            __viewStack__[-1],
+            __modelStack__[-1],
         )
     if matrixStack == MatrixStack.modelviewprojection:
         return np.matmul(
-            __projectionStack__[len(__projectionStack__) - 1],
+            __projectionStack__[-1],
             np.matmul(
-                __viewStack__[len(__viewStack__) - 1],
-                __modelStack__[len(__modelStack__) - 1],
+                __viewStack__[-1],
+                __modelStack__[-1],
             ),
         )
 
 
 def set_current_matrix(matrixStack, m):
     if matrixStack == MatrixStack.model:
-        __modelStack__[len(__modelStack__) - 1] = m
+        __modelStack__[-1] = m
     if matrixStack == MatrixStack.view:
-        __viewStack__[len(__viewStack__) - 1] = m
+        __viewStack__[-1] = m
     if matrixStack == MatrixStack.projection:
-        __projectionStack__[len(__projectionStack__) - 1] = m
+        __projectionStack__[-1] = m
     # TODO, figure out how to throw exception, or whatever
     if matrixStack == MatrixStack.modelview:
         pass
@@ -375,7 +375,7 @@ def ortho(left, right, bottom, top, near, far):
     ry = -(top + bottom) / (top - bottom)
     rz = -(far + near) / (far - near)
 
-    __projectionStack__[len(__projectionStack__) - 1] = np.matrix(
+    __projectionStack__[-1] = np.matrix(
         [
             [2.0 / dx, 0.0, 0.0, rx],
             [0.0, 2.0 / dy, 0.0, ry],
@@ -386,7 +386,7 @@ def ortho(left, right, bottom, top, near, far):
     )
 
 
-def perspective(field_of_view, aspectRatio, near_z, far_z):
+def perspective(field_of_view, aspect_ratio, near_z, far_z):
     """perspective projection, where things further away look smaller
     by shrinking their x and y coordinates.
 
@@ -399,9 +399,9 @@ def perspective(field_of_view, aspectRatio, near_z, far_z):
     http://www.songho.ca/opengl/gl_projectionmatrix.html
     """
     top = near_z * math.tan(field_of_view * 3.14159265358979323846 / 360.0)
-    right = top * aspectRatio
+    right = top * aspect_ratio
 
-    __projectionStack__[len(__projectionStack__) - 1] = np.matrix(
+    __projectionStack__[-1] = np.matrix(
         [
             [near_z / right, 0.0, 0.0, 0.0],
             [0.0, near_z / top, 0.0, 0.0],
